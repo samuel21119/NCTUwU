@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121963518-4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-121963518-4');
+    </script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTHUwU | 清大選課模擬器</title>
+
+    <meta property="og:title" content="NTHUwU | 清大選課模擬器" />
+    <meta property="og:url" content="https://samuel21119.github.io/NTHUwU/" />
+
+    <script src="js/config-year.js"></script>
+    <script src="js/config.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbi@3.1.3/dist/jsbi-umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="body">
+    <nav id="navbar" class="navbar is-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://samuel21119.github.io/NTHUwU/">
+                    NTHUwU
+                </a>
+                <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-end">
+                    <a class="navbar-item" id="user-status"></a>
+                    <a class="navbar-item" id="light-mode"><i class="fas fa-moon"></i></a>
+                    <a class="navbar-item" id="dark-mode"><i class="far fa-sun"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container is-widescreen">
+        <div class="columns is-desktop">
+            <div class="column is-one-quarter-desktop sidebar">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="載入課程資料中" disabled>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field select is-fullwidth">
+                    <select class="department" data-level="1"></select>
+                </div>
+                <div class="field select is-fullwidth is-hidden">
+                    <select class="department" data-level="2"></select>
+                </div>
+                <div class="field select is-fullwidth is-hidden">
+                    <select class="department" data-level="3"></select>
+                </div>
+                <div class="result course-panel course-list"></div>
+                <div class="course-panel">
+                    <span class="tag is-info credits">0 學分</span>
+                    <div class="selected course-list"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="columns is-marginless">
+                    <div class="column">
+                        <div class="field chips" id="search-period">
+                        </div>
+                    </div>
+                    <div class="column has-text-right ">
+                        <button id="download" class="button is-small">
+                            <span class="icon is-small">
+                                <i class="fas fa-download"></i>
+                            </span>
+                            <span>下載圖片</span>
+                        </button>
+                        <button id="copy-link" class="button is-small">
+                            <span class="icon is-small">
+                                <i class="fas fa-share-square"></i>
+                            </span>
+                            <span>複製分享連結</span>
+                        </button>
+                        <button id="clear-table" class="button is-small">
+                            <span class="icon is-small">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span>清除課表</span>
+                        </button>
+                        <button id="import" class="button is-small is-hidden">
+                            <span class="icon is-small">
+                                <i class="fas fa-file-import"></i>
+                            </span>
+                            <span>匯入此課表</span>
+                        </button>
+                        <div class="dropdown is-right is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button class="button is-small" aria-haspopup="true" aria-controls="setting">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-cog" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="setting" role="menu">
+                                <div class="dropdown-content has-text-left">
+                                    <div class="dropdown-item">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="timetable" id="timetable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th class="weekend">Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer has-text-centered">
+        <p>Modified By @samuel21119</p>
+        <a href="https://github.com/samuel21119/NTHUwU" target="_blank">
+            <span class="icon">
+                <i class="fab fa-github"></i>
+            </span>
+        </a>
+        <p>Forked From splitline/NCTUwU</p>
+        <a href="https://github.com/splitline/NCTUwU" target="_blank">
+            <span class="icon">
+                <i class="fab fa-github"></i>
+            </span>
+        </a>
+    </footer>
+
+    <template id="courseTemplate">
+        <div class="course">
+            <p>
+                <b class="modal-launcher" id="name"></b>
+                <span class="tag is-rounded" id="type"></span>
+            </p>
+            <div class="chips"></div>
+            <p id="detail"></p>
+            <a class="toggle-course">
+                <span class="icon">
+                    <i class="toggle-icon fas fa-plus"></i>
+                </span>
+            </a>
+        </div>
+    </template>
+
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title"></p>
+                    <a href="#" class="card-header-icon">
+                        <span class="icon">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <dl class="dl-horizontal">
+                            <dt>課號</dt>
+                            <dd></dd>
+                            <dt>學分</dt>
+                            <dd></dd>
+                            <dt>教師</dt>
+                            <dd></dd>
+                            <dt>上課時間</dt>
+                            <dd></dd>
+                            <dt>上課地點</dt>
+                            <dd></dd>
+                        </dl>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a href="#" target="_blank" id="outline" class="card-footer-item">課程綱要</a>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <style id="custom-style"></style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="js/app.js"></script>
+    <script src="lib/dom-to-image.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach(el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

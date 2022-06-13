@@ -1,0 +1,413 @@
+/* Dark Mode */
+:root {
+    --bg-color: #ffffff;
+    --nav-box-shadow: #e6e9eb;
+    --navbar-menu-bg-color: #ffffff;
+    --footer-color: #AAAAAA;
+    --footer-bg-color: #fafafa;
+    --table-container-box-shadow: #ECEFF1;
+    --timetable-bg-color: #ffffff;
+    --timetable-period-bg-color: #f9f9f9;
+    --timetable-box-shadow: #ECEFF1;
+    --timetable-color: rgb(74, 74, 74);
+    --find-empty-overlay-bg-color: #AAA;
+    --find-empty-overlay-selected-bg-color: hsl(48, 100%, 87%);
+    --course-panel-boarder: #dbdbdb;
+    --course-list-bg-color: #f3f3f3;
+    --input-placeholder-color: default;
+    --card-bg-color: #ffffff;
+    --card-color: #4a4a4a;
+    --card-header-title-color: #363636;
+    --card-button-color: #3173db;
+    --button-color-hover: #363636;
+    --input-border-color: #b5b5b5;
+}
+.dark {
+    --bg-color: #181a1b;
+    --nav-box-shadow: #5c5c5c;
+    --navbar-menu-bg-color: #282828;
+    --footer-color: #d4d4d4;
+    --footer-bg-color: #363636;
+    --table-container-box-shadow: #757575;
+    --timetable-bg-color: var(--bg-color);
+    --timetable-period-bg-color: #4d4d4d;
+    --timetable-box-shadow: #ECEFF1;
+    --timetable-color: rgb(230, 230, 230);
+    --find-empty-overlay-bg-color: #AAA;
+    --find-empty-overlay-selected-bg-color: hsl(48, 100%, 87%);
+    --course-panel-boarder: #8c8c8c;
+    --course-list-bg-color: #4d4d4d;
+    --input-placeholder-color: #b3b3b3;
+    --card-bg-color: #4d4d4d;
+    --card-color: #f2f2f2;
+    --card-header-title-color: #ffffff;
+    --card-button-color: #4db8ff;
+    --button-color-hover: #ffffff;
+    --input-border-color: #ffffff;
+}
+
+/* Show Room */
+:root {
+    --room-show: none;
+    --timetable-td-height: 64px;
+}
+.showRoom {
+    --room-show: block;
+    --timetable-td-height: 80px;
+}
+
+/* Show Time */
+:root {
+    --showTime-Width: 2rem;
+    --showTime-Style: none;
+}
+.showTime {
+    --showTime-Width: 100px;
+    --showTime-Style: block;
+}
+
+html,
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    padding-top: 4.5rem;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+nav {
+    margin-bottom: 1.75rem;
+    box-shadow: 0 5px 10px var(--nav-box-shadow);
+}
+
+@media screen and (max-width:1023px) {
+    .navbar-menu {
+        background-color: var(--navbar-menu-bg-color);
+    }
+}
+
+.navbar-item {
+    color: var(--timetable-color);
+}
+
+.navbar-brand img {
+    transform: translateY(10%);
+    max-height: 2rem;
+}
+
+footer {
+    line-height: 2;
+    position: static;
+    margin-top: 3em;
+    color: var(--footer-color);
+}
+
+.footer {
+    background-color: var(--footer-bg-color);
+}
+
+.table-container {
+    box-shadow: 0 0 10px var(--table-container-box-shadow);
+}
+
+.timetable {
+    background-color: var(--timetable-bg-color);
+    color: var(--timetable-color);
+    table-layout: fixed;
+    width: 100%;
+    min-width: 770px;
+    text-align: center;
+}
+
+.timetable tr>th:first-child {
+    width: var(--showTime-Width);
+}
+
+.timetable * {
+    vertical-align: middle;
+}
+
+.timetable th {
+    box-shadow: inset 1px 1px 1px var(--timetable-box-shadow);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--timetable-color);
+}
+
+.timetable td {
+    position: relative;
+    box-shadow: inset 1px 1px 1px var(--timetable-box-shadow);
+    padding: 0;
+    height: var(--timetable-td-height);
+    color: var(--timetable-color);
+}
+
+.find-empty-overlay {
+    position: absolute;
+    top: 0;
+    transition: .5s ease;
+    cursor: pointer;
+    height: var(--timetable-td-height);
+    width: 100%;
+    opacity: 0;
+}
+
+.find-empty-overlay.selected {
+    opacity: 1;
+}
+
+.find-empty-overlay:hover {
+    opacity: 1;
+}
+
+.find-empty-overlay .vertical {
+    transition: all .25s ease-in-out;
+    position: absolute;
+    background-color: var(--find-empty-overlay-bg-color);
+    width: 5px;
+    height: 30px;
+    left: 50%;
+    margin-left: -2.5px;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.find-empty-overlay .horizontal {
+    transition: all .25s ease-in-out;
+    position: absolute;
+    background-color: var(--find-empty-overlay-bg-color);
+    width: 30px;
+    height: 5px;
+    left: 50%;
+    margin-left: -15px;
+    top: 50%;
+    margin-top: -2.5px;
+    opacity: 1;
+}
+
+.find-empty-overlay.selected .vertical {
+    background-color: var(--find-empty-overlay-selected-bg-color);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    left: 0;
+    top: 0;
+
+}
+
+.find-empty-overlay.selected .horizontal {
+    opacity: 0;
+}
+
+.timetable .period {
+    z-index: 5;
+    position: relative;
+    cursor: pointer;
+    display: block;
+    background-color: var(--timetable-period-bg-color);
+    width: 100%;
+    height: 100%;
+    -webkit-transition: .2s ease box-shadow, .2s ease transform;
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .period.preview {
+    z-index: 3;
+    box-shadow: 0 20px 30px 0 rgba(238, 142, 188, 0.3);
+    animation-name: pulse;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite ;
+    animation-duration: 1s;
+}
+
+.timetable .period:hover {
+    box-shadow: 0 20px 30px 0 rgba(238, 142, 188, 0.3);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.timetable .period span {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    padding: 0.5em;
+}
+
+@keyframes pulse {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+  
+    50% {
+      transform: scale3d(1.05, 1.05, 1.05);
+    }
+  
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+
+.course-panel {
+    position: relative;
+    padding: .75em .5em;
+    margin-bottom: 1em;
+    border: solid 1px var(--course-panel-boarder);
+}
+
+.course-list {
+    height: 300px;
+    overflow-y: scroll;
+    color: var(--timetable-color);
+}
+
+.course-panel .credits {
+    top: 0;
+    left: 0;
+    position: absolute;
+    transform: translate(-10%, -25%);
+    z-index: 10;
+}
+
+.course-list>.course {
+    margin-bottom: 0.5em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    background-color: var(--course-list-bg-color);
+    min-height: 3em;
+    position: relative;
+    padding: 0.5em 2.5em 0.5em 0.5em;
+}
+
+.course-list>.course #name {
+    cursor: pointer;
+}
+
+.course>.toggle-course {
+    position: absolute;
+    right: 1em;
+    transition: transform .25s;
+}
+
+.course>.toggle-course.is-selected {
+    color: hsl(348, 100%, 61%);
+    transform: rotate(45deg);
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    color: var(--card-color);
+}
+
+.card-header-title {
+    color: var(--card-header-title-color);
+}
+
+.card-header-icon, .card-footer-item {
+    color: var(--card-button-color);
+}
+
+span.icon:hover {
+    color: var(--button-color-hover);
+}
+
+.modal-launcher *,
+.toggle-course * {
+    pointer-events: none;
+}
+
+
+/* animate.css */
+@keyframes backInDown {
+    0% {
+        transform: translateY(-1200px) scale(0.7);
+        opacity: 0.7;
+    }
+
+    80% {
+        transform: translateY(0px) scale(0.7);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.is-active .modal-content {
+    animation-name: backInDown;
+    animation-duration: 0.5s;
+}
+
+.dl-horizontal {
+    font-size: 0;
+    text-align: center;
+}
+
+.dl-horizontal dt,
+.dl-horizontal dd {
+    width: 48%;
+    width: calc(50% - 10px);
+    margin: 8px 0;
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.dl-horizontal dt {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.dl-horizontal dd {
+    font-size: 18px;
+    font-weight: 300;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.chips .tag {
+    margin-right: 0.25rem;
+}
+
+.swal2-html-container {
+    text-align: left;
+}
+
+
+input.input, select.department {
+    background-color: var(--bg-color);
+    color: var(--timetable-color);
+}
+
+input.input:hover, select.department:hover {
+    border-color: var(--input-border-color);
+}
+
+input.input::placeholder {
+    color: var(--input-placeholder-color);
+}
+
+input,input:focus + span.icon.is-small.is-left {
+    color: #fff;
+}
+
+.button, .button:hover, .dropdown-content, .dropdown-content:hover, .checkbox, .checkbox:hover {
+    background-color: var(--bg-color);
+    color: var(--timetable-color);
+}
