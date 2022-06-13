@@ -4,13 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "genCourse": "node genCourses.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "fs": "0.0.1-security",
     "jssoup": "0.0.12",
+    "path": "^0.12.7",
     "request": "^2.88.2"
   }
 }
