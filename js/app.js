@@ -16,6 +16,8 @@ const Toast = Swal.mixin({
 const hide = elem => elem.classList.add("is-hidden");
 const show = elem => elem.classList.remove("is-hidden");
 
+let ACIXSTORE = "";
+
 let courseData = {};
 let selectedCourse = {};
 let department = {}
@@ -436,9 +438,16 @@ function openModal(courseId) {
     fields[3].textContent = data.time;
     fields[4].textContent = data.room;
 
+    
+
     modal.querySelector('.card-header-title').textContent = data.name;
     // modal.querySelector('#outline').href = `https://timetable.nctu.edu.tw/?r=main/crsoutline&Acy=${YEAR}&Sem=${SEMESTER}&CrsNo=${courseId}&lang=zh-tw`;
-    modal.querySelector('#outline').href = `https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/6/6.2/6.2.9/JH629001.php`;
+    const numbers = data.id.match(/\d+/g);
+    const dept = data.id.match(/[A-Z]+/);
+    if (numbers.length === 2 && dept.length === 1) {
+        const full_id = numbers[0] + dept[0] + " ".repeat(4 - dept[0].length) + numbers[1]; 
+        modal.querySelector('#outline').setAttribute("onClick", `getOutline('${full_id}');`);
+    }
 }
 
 function createTag(text, type, closeCallback) {
@@ -728,3 +737,41 @@ document.getElementById("dark-mode").onclick = () => {
     localStorage.setItem("theme", theme);
     changeTheme();
 }
+
+const getOutline = (courseId) => {
+    console.log(courseId)
+    if (courseId == 0 || ACIXSTORE == "") {
+        window.open('https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/6/6.2/6.2.I/JH62i001.php','_blank');
+    }else {
+        window.open(`https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/common/Syllabus/1.php?ACIXSTORE=${ACIXSTORE}&c_key=${courseId}`, '_blank');
+    }
+}
+
+const request = (method, url, par, setting, callback) => {
+    var http = new XMLHttpRequest();
+    http.open(method, url, true);
+    if (typeof(setting) === "function")
+      setting(http);
+    http.onreadystatechange = function() {
+        if (http.readyState == 4 && http.status == 200) {
+            callback(http);
+        }
+    };
+    http.send(par);
+}
+
+const getACIXSTORE = () => {
+    request("GET", `https://cors-anywhere.herokuapp.com/https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/6/6.2/6.2.I/JH62i001.php`, undefined, undefined, (http) => {
+        const page = http.responseText;
+        const acix = page.match(/ACIXSTORE" value="[a-z0-9]+/);
+        if (acix.length === 1) {
+            ACIXSTORE = acix[0].replace(`ACIXSTORE" value="`, "")
+            console.log(ACIXSTORE);
+        }else {
+            console.log("ERR get ACIXSTORE");
+        }
+        
+    });
+}
+getACIXSTORE();
+window.setInterval(getACIXSTORE, 900000);
