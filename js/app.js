@@ -761,7 +761,7 @@ const request = (method, url, par, setting, callback) => {
 }
 
 const getACIXSTORE = () => {
-    request("GET", `https://cors.enmingw32.dev:4433/https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/6/6.2/6.2.I/JH62i001.php`, undefined, undefined, (http) => {
+    request("GET", `https://cors-bypasss.herokuapp.com/https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/6/6.2/6.2.I/JH62i001.php`, undefined, undefined, (http) => {
         const page = http.responseText;
         const acix = page.match(/ACIXSTORE" value="[a-z0-9]+/);
         if (acix.length === 1) {
