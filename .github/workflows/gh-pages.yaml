@@ -24,8 +24,6 @@ jobs:
         run: |
           npm i
           npm run genCours
-          git add .
-          git commit -m "Update course"
   deploy:
     runs-on: ubuntu-latest
     needs: update-course
