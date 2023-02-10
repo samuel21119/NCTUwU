@@ -99,7 +99,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 const login = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-    firebase.auth().signInWithRedirect(provider);    
+    firebase.auth().signInWithPopup(provider);
+    // firebase.auth().signInWithRedirect(provider);    
     //location.replace(`https://accounts.google.com/o/oauth2/auth?client_id=${OAUTH_CLIENT_ID}&response_type=code&scope=email&redirect_uri=${APP_URL}`);
 }
 
