@@ -40,6 +40,7 @@ axios.get("https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_dat
             var credit = x["學分數"];
             var teacher = getTeacher(x["授課教師"]);
             var roomAndTime = x["教室與上課時間"].split('\n');
+            let core_ge = x["通識類別"];
 
             var room = ""; var time = "";
             for (var i = 0; i < roomAndTime.length - 1; i++) {
@@ -53,9 +54,14 @@ axios.get("https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_dat
 
             var type1 = x["必選修說明"];
             var type2 = x["通識類別"];
-            var type = 3;
-            if (type2.trim().length > 0)
+            var type = 0;
+            if (type2.trim().length > 0) {
                 type = 2;
+                if (type2.indexOf("核心通識") != -1) {
+                    type = 2 + +(type2.slice(-1));
+                }
+                
+            }
             else if (type1.indexOf("必修") !== -1)
                 type = 1;
             else if (type1.indexOf("選修") !== -1)
