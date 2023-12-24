@@ -7,10 +7,10 @@ axios.get("https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_dat
     let year = date.getFullYear() - 1911;
     let semester = 10;
     let month = date.getMonth();
-    if (month < 5) {
+    if (month < 6) {
         year--;
         semester = 20;
-    }else if (month == 12) {
+    }else if (month == 11) {
         semester = 20;
     }
     try {
