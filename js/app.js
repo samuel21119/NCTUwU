@@ -341,13 +341,14 @@ function renderConfig(options) {
 
 function renderDepartment(department) {
     const renderSelect = (id, options) => {
-        if (id == 3) options = GRADE;
+        if (id == 3) 
+            options = GRADE;
         document.querySelector(`.department[data-level="${id}"]`).parentElement.classList.remove('is-hidden')
-        document.querySelector(`.department[data-level="${id}"]`).innerHTML =
-            (id === 1 ? "<option selected>全部開課單位</option>" : "<option disabled selected>選擇開課單位</option>") +
-            Object.entries(options).map(
-                ([name]) => `<option>${name}</option>`
-            ).join('');
+            document.querySelector(`.department[data-level="${id}"]`).innerHTML =
+                (id === 1 ? "<option selected>全部開課單位</option>" : "<option disabled selected>選擇開課單位</option>") +
+                Object.entries(options).map(
+                    ([name]) => `<option>${name}</option>`
+                ).join('');
     }
     renderSelect(1, department);
     document.querySelectorAll('select').forEach((elem, _, selects) =>
@@ -365,15 +366,18 @@ function renderDepartment(department) {
             }
             else if (level === 2)
                 currentValue = department[selects[0].value][elem.value];
-            else
-                currentValue = "[0-9]" + department[selects[0].value][selects[1].value] + GRADE[elem.value];
+            else {
+                currentValue = "[0-9]" + department[selects[0].value][selects[1].value];
+                currentValue = currentValue + GRADE[elem.value];
+            }
+            console.log(currentValue);
             
             const hasNextLevel = !!(level <= 2);
             if (hasNextLevel)
                 renderSelect(level + 1, currentValue)
             else
                 setFilter({ department: true, departmentRegex: (new RegExp(currentValue)) });
-
+            
             selects.forEach(select =>
                 (+select.dataset.level > level + hasNextLevel) &&
                 hide(select.parentElement)
@@ -470,9 +474,10 @@ function appendCourseElement(courses, search = false) {
     const fragment = document.createDocumentFragment();
     courses.forEach(course => {
         const template = document.importNode(document.getElementById("courseTemplate").content, true);
-        if (course.type < 3) {
-            template.getElementById("type").textContent = COURSE_TYPE[course.type];
-            const typeColor = course.type === 0 ? 'is-white' :
+        if (course.type < COURSE_TYPE.length) {
+            let type = course.type;
+            template.getElementById("type").textContent = COURSE_TYPE[type];
+            const typeColor = type === 0 ? 'is-white' :
                 course.type === 1 ? 'is-danger' :
                     'is-primary';
             template.getElementById("type").className = `tag is-rounded ${typeColor}`;
@@ -506,7 +511,8 @@ function search(searchTerm) {
             course.id.match(regex) ||
             course.id.match(regex2) ||
             course.teacher.match(regex) ||
-            course.name.match(regex)) &&
+            course.name.match(regex) ||
+            COURSE_TYPE[course.type].match(regex)) &&
             (!filter.department || course.id.match(filter.departmentRegex)) && 
             (!filter.period || filter.periodCodes.some(code => (course.time.match(code) !== null)))
         )).slice(0, FIND_COURSE_RESULT_LIMIT);
