@@ -1,1 +1,1 @@
-const YEAR = '113', SEMESTER = '10';
+const YEAR = '113', SEMESTER = '20';
